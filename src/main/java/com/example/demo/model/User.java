@@ -1,9 +1,10 @@
 package com.example.demo.model;
 import jakarta.persistence.Entity;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
 
-
+@Entity
 public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +18,7 @@ public class User{
     public User(Long id,String name, String email,String password, String role, String createdAt){
            
         this.id=id;
-        @Size()
+       
         this.name=name;
         this.email=email;
         this.password=password;
