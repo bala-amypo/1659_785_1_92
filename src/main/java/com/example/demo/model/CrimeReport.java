@@ -65,11 +65,9 @@ public class CrimeReport {
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
-
     public LocalDateTime getOccurredAt() {
         return occurredAt;
     }
-
     public void setOccurredAt(LocalDateTime occurredAt) {
         this.occurredAt = occurredAt;
     }
