@@ -48,6 +48,7 @@ public class CrimeReport {
         }
         public CrimeReport() {
         }
+        
         public CrimeReport(Long id, String crimeType, String description, Double latitude, Double longitude,
                 LocalDateTime occuredAt) {
             this.id = id;
