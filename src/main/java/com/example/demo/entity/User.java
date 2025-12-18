@@ -43,5 +43,8 @@ public class User{
     public void setPassword(String password){
         this.password=password;
     }
-    public LocalDateTime get
+    public LocalDateTime getCreatedAt(){
+        return createdAt;
+    }
+    public void setCreatedAt(LocalDateT)
 }
