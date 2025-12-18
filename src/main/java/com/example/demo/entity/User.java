@@ -8,7 +8,7 @@ public class User{
     private String email;
     private String password;
     private String role;
-    private  createdAt;
+    private LocalDateTime createdAt;
 
     public User(Long id,String name, String email,String password, String role, String createdAt){
         this.id=id;
@@ -43,5 +43,5 @@ public class User{
     public void setPassword(String password){
         this.password=password;
     }
-
+    public LocalDateTime get
 }
