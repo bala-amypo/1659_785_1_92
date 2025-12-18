@@ -8,7 +8,7 @@ public class User{
     private String email;
     private String password;
     private String role;
-    private String createdAt;
+    private  createdAt;
 
     public User(Long id,String name, String email,String password, String role, String createdAt){
         this.id=id;
@@ -40,7 +40,8 @@ public class User{
      public String getPassword(){
         return password;
     }
-    public void setName(String password){
-        this.name=name;
+    public void setPassword(String password){
+        this.password=password;
     }
+
 }
