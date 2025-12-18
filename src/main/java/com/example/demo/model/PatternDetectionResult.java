@@ -24,7 +24,8 @@ public class PatternDetectionResult {
     public PatternDetectionResult() {
     }
 
-    public PatternDetectionResult(HotspotZone zone, LocalDate analysisDate, Integer crimeCount, String detectedPattern) {
+    public PatternDetectionResult(Long id,HotspotZone zone, LocalDate analysisDate, Integer crimeCount, String detectedPattern) {
+        this.id=id;
         this.zone = zone;
         this.analysisDate = analysisDate;
         this.crimeCount = crimeCount;
@@ -34,7 +35,9 @@ public class PatternDetectionResult {
     public Long getId() {
         return id;
     }
-    public 
+    public void setId(Long id){
+        this.id=id;
+    }
 
     public HotspotZone getZone() {
         return zone;
