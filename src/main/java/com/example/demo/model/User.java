@@ -1,7 +1,23 @@
 package com.example.demo.model;
+import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Positive;
+
 
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,26 +46,11 @@ public class User{
 
 
 
-import lombok.Data;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Positive;
 
 
 
-@Entity
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class Validationentity{
+
+
 
         @Id
         @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -72,4 +73,3 @@ public class Validationentity{
 
 
 
-}
