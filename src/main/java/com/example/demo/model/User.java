@@ -22,8 +22,13 @@ public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull
+    @Size(min= 2,max = 10, message="must be 2 to 10 character")
     private String name;
+    @Email(message="Email is not valid")
     private String email;
+    @Size(min= 2,max = 10, message="must be 2 to 10 character")
+    @NotNull(message=" Password is mandatory")
     private String password;
     private String role;
     private LocalDateTime createdAt;
@@ -42,20 +47,7 @@ public class User{
 
 
 
-        @Id
-        @GeneratedValue(strategy=GenerationType.IDENTITY)
-        private Long id;
-        @NotNull
-        @Size(min= 2,max = 10, message="must be 2 to 10 character")
-        private String name;
-        @Email(message="Email is not valid")
-        private String email;
-        @Size(min= 2,max = 10, message="must be 2 to 10 character")
-        @NotNull(message=" Password is mandatory")
-        private String password;
-        @Max(30)
-        @Positive(message="Age  must be positive")
-        private int age;
+       
          
 
 
