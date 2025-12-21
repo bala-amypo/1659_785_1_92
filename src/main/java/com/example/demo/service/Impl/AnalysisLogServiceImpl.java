@@ -12,14 +12,14 @@ import java.util.List;
 @Service
 public class HotspotZoneServiceImpl implements HotspotZoneService{
     @Autowired 
-    HotspotZoneRepository  hotspot;
+     private  AnalysisLogRepository  analysis ;
 
     @Override 
-    public HotspotZone addZone(HotspotZone zone){
-        return hotspot.save(zone);
+    public  AnalysisLog addLog(Long zoneId,String message){
+        return analysis.save();
     }
     @Override
-    public List<HotspotZone>getAllZones(){
-        return hotspot.findAll();
+    public List<AnalysisLog>getLogsByZone(Long zoneId){
+        return analysis.findAll(zoneId);
     }
 }
