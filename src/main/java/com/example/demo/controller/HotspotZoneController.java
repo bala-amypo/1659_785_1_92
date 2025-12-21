@@ -19,7 +19,7 @@ public class HotspotZoneController {
     public HotspotZone hotReport(@Valid @RequestBody HotspotZone zone ){
         return hotservice.addZone(zone);
     }
-    @GetMapping("/get")
+    @GetMapping("/hotget")
     public List<HotspotZone> hotval(){
         return hotservice.getAllZones();
     }
