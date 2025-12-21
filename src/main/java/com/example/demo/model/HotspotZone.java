@@ -1,67 +1,43 @@
-// package com.example.demo.model;
+package com.example.demo.model;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 
-
-// import jakarta.persistence.Entity;
-// import jakarta.persistence.GeneratedValue;
-// import jakarta.persistence.GenerationType;
-// import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
 
 
-// @Entity
-// public class HotspotZone {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-//     @Id
-//     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//     private Long id;
-//     private String zoneName;
-//     private Double centerLat;
-//     private Double centerLong;
-//     private String severityLevel;
+@Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class HotspotZone {
 
-//     public HotspotZone() {
-//     }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-//     public HotspotZone(String zoneName, Double centerLat, Double centerLong, String severityLevel) {
-//         this.zoneName = zoneName;
-//         this.centerLat = centerLat;
-//         this.centerLong = centerLong;
-//         this.severityLevel = severityLevel;
-//     }
+    @NotNull(message = "Zone name is mandatory")
+    @Column(unique = true)
+    private String zoneName;
 
-//     public Long getId() {
-//         return id;
-//     }
+    @NotNull(message = "Center latitude is mandatory")
+    @DecimalMin(value = "-90.0", message = "Latitude must be >= -90")
+    @DecimalMax(value = "90.0", message = "Latitude must be <= 90")
+    private Double centerLat;
 
-//     public String getZoneName() {
-//         return zoneName;
-//     }
+    @NotNull(message = "Center longitude is mandatory")
+    
+    private Double centerLong;
 
-//     public void setZoneName(String zoneName) {
-//         this.zoneName = zoneName;
-//     }
-
-//     public Double getCenterLat() {
-//         return centerLat;
-//     }
-
-//     public void setCenterLat(Double centerLat) {
-//         this.centerLat = centerLat;
-//     }
-
-//     public Double getCenterLong() {
-//         return centerLong;
-//     }
-
-//     public void setCenterLong(Double centerLong) {
-//         this.centerLong = centerLong;
-//     }
-
-//     public String getSeverityLevel() {
-//         return severityLevel;
-//     }
-
-//     public void setSeverityLevel(String severityLevel) {
-//         this.severityLevel = severityLevel;
-//     }
-// }
+    @NotNull(message = "Severity level is mandatory")
+    
+    private String severityLevel;
+}
