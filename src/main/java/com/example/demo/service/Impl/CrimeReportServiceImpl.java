@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.service.CrimeReportService;
-import com.example.demo.repository.Repository;
-import com.example.demo.model.User;
+import com.example.demo.repository.CrimeReportRepository;
+import com.example.demo.model.CrimeReport;
 
 
 
