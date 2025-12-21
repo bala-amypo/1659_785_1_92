@@ -14,7 +14,7 @@ pacakge com.example.demo.service.Impl;
         return service.save(user);
         @Override
         public User findByEmail(String email){
-            return service.
+            return service.findByEmail(email)
         }
     } 
  }
