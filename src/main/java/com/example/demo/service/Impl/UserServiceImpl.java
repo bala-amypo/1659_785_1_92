@@ -8,9 +8,16 @@ pacakge com.example.demo.service.Impl;
 @Service
  public class UserServiceImpl implements UserService{ 
           @Autowired UserRepository  service;
-          
-    } 
 
+          @Override
+        public  User register(User user){
+        return service.save(user);
+        @Override
+        public User findByEmail(String email){
+            return service.
+        }
+    } 
+ }
 
 
 
