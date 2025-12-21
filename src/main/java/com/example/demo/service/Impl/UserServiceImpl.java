@@ -12,14 +12,14 @@ import com.example.demo.model.User;
 
 @Service
  public class UserServiceImpl implements UserService{ 
-          @Autowired UserRepository  service;
+          @Autowired UserRepository  userrepo;
 
           @Override
         public  User register(User user){
-        return service.save(user);
+        return userrepo.save(user);
         @Override
         public User findByEmail(String email){
-            return service.findByEmail(email)
+            return userrepo.findByEmail(email)
         }
     } 
  }
