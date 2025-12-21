@@ -25,7 +25,7 @@ public class HotspotZoneController {
         return hotservice.addZone(zone);
     }
     @GetMapping("/get")
-    public List<HotspotZone>gethotval(){
+    public List<HotspotZone> hotval(){
         return hotservice.getAllZones();
     }
 }
