@@ -10,5 +10,7 @@ public class CrimeReportController {
     private CrimeReportService crimeservice;
 
     @PostMapping("/")
-    public CrimeReport valReport(@RequestBody CrimeReport )
+    public CrimeReport valReport(@RequestBody CrimeReport report){
+        return crimeservice.addReport(repo)
+    }
 }
