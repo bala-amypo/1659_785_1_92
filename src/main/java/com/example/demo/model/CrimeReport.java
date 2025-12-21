@@ -8,8 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.Present;
+import jakarta.validation.constraints.PastOrPresent;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -40,7 +39,7 @@ public class CrimeReport {
     private Double longitude;
 
     @NotNull(message = "Occurred time is mandatory")
-    @Past(message = "Occurred time cannot be in the future")
-    @Present(message = "Occurred time cannot be in the future")
+    @PastOrPresent(message = "Occurred time cannot be in the future")
+    
     private LocalDateTime occurredAt;
 }
