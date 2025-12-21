@@ -17,11 +17,12 @@ import com.example.demo.model.User;
           @Override
         public  User register(User user){
         return userrepo.save(user);
+        }
         @Override
         public User findByEmail(String email){
-            return userrepo.findByEmail(email)
+            return userrepo.findByEmail(email);
         }
-    } 
+    
  }
 
 
