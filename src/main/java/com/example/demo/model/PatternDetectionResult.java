@@ -6,20 +6,27 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class PatternDetectionResult {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+   
     @NotNull
     private HotspotZone zone;
 
@@ -32,7 +39,6 @@ public class PatternDetectionResult {
 
     private String detectedPattern;
 
-    
     @PrePersist
     @PreUpdate
     private void setDetectedPattern() {
@@ -44,6 +50,4 @@ public class PatternDetectionResult {
             detectedPattern = "No";
         }
     }
-
-    
 }
