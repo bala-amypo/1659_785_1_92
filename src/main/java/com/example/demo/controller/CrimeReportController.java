@@ -11,6 +11,10 @@ public class CrimeReportController {
 
     @PostMapping("/")
     public CrimeReport valReport(@RequestBody CrimeReport report){
-        return crimeservice.addReport(repo)
+        return crimeservice.addReport(report);
+    }
+    @GetMapping("/")
+    public List<CrimeReport> getval(){
+        return crimeservice.getAllReports();
     }
 }
