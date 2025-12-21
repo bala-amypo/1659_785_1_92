@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 
-import com.example.demo.model.CrimeReport;
-import com.example.demo.service.CrimeReportService;
+import com.example.demo.model.HotspotZone;
+import com.example.demo.service.HotspotZoneService;
 
 @RestController
-public class CrimeReportController {
+public class HotspotZoneController {
 
     @Autowired
     private CrimeReportService crimeservice;
