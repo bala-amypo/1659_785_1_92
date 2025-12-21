@@ -1,74 +1,46 @@
-// package com.example.demo.model;
+package com.example.demo.model;
 
-// import jakarta.persistence.Entity;
-// import jakarta.persistence.GeneratedValue;
-// import jakarta.persistence.GenerationType;
-// import jakarta.persistence.Id;
+import java.time.LocalDateTime;
 
-// import java.time.LocalDateTime;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
-// @Entity
-// public class CrimeReport {
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Present;
 
-//     @Id
-//     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//     private Long id;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-//     private String crimeType;
+@Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class CrimeReport {
 
-//     private String description;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-   
-//     private Double latitude;
+    @NotNull(message = "Crime type is mandatory")
+    private String crimeType;
 
-  
-//     private Double longitude;
+    @NotNull(message = "Description is mandatory")
+    private String description;
 
-   
-//     private LocalDateTime occurredAt;
+    @NotNull(message = "Latitude is mandatory")
+    
+    private Double latitude;
 
-//     public CrimeReport() {
-//     }
+    @NotNull(message = "Longitude is mandatory")
 
-//     public CrimeReport(String crimeType, String description, Double latitude, Double longitude, LocalDateTime occurredAt) {
-//         this.crimeType = crimeType;
-//         this.description = description;
-//         this.latitude = latitude;
-//         this.longitude = longitude;
-//         this.occurredAt = occurredAt;
-//     }
+    private Double longitude;
 
-//     public Long getId() {
-//         return id;
-//     }
-//     public String getCrimeType() {
-//         return crimeType;
-//     }
-//     public void setCrimeType(String crimeType) {
-//         this.crimeType = crimeType;
-//     }
-//     public String getDescription() {
-//         return description;
-//     }
-//     public void setDescription(String description) {
-//         this.description = description;
-//     }
-//     public Double getLatitude() {
-//         return latitude;
-//     }
-//     public void setLatitude(Double latitude) {
-//         this.latitude = latitude;
-//     }
-//     public Double getLongitude() {
-//         return longitude;
-//     }
-//     public void setLongitude(Double longitude) {
-//         this.longitude = longitude;
-//     }
-//     public LocalDateTime getOccurredAt() {
-//         return occurredAt;
-//     }
-//     public void setOccurredAt(LocalDateTime occurredAt) {
-//         this.occurredAt = occurredAt;
-//     }
-// }
+    @NotNull(message = "Occurred time is mandatory")
+    @Past(message = "Occurred time cannot be in the future")
+    @Present(message = "Occurred time cannot be in the future")
+    private LocalDateTime occurredAt;
+}
