@@ -18,14 +18,14 @@ import com.example.demo.service.HotspotZoneService;
 public class HotspotZoneController {
 
     @Autowired
-    private CrimeReportService crimeservice;
+    private HotspotZoneService hotservice;
 
     @PostMapping("/hotpost")
-    public CrimeReport valReport(@Valid @RequestBody CrimeReport report){
-        return crimeservice.addReport(report);
+    public HotspotZone hotReport(@Valid @RequestBody CrimeReport report){
+        return hotservice.addReport(report);
     }
     @GetMapping("/get")
-    public List<CrimeReport> getval(){
-        return crimeservice.getAllReports();
+    public List<HotspotZone>gethotval(){
+        return hotservice.getAll();
     }
 }
