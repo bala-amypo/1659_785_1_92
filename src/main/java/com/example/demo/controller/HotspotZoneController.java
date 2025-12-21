@@ -22,10 +22,10 @@ public class HotspotZoneController {
 
     @PostMapping("/hotpost")
     public HotspotZone hotReport(@Valid @RequestBody HotspotZone zone ){
-        return hotservice.addReport(zone);
+        return hotservice.addZone(zone);
     }
     @GetMapping("/get")
     public List<HotspotZone>gethotval(){
-        return hotservice.getAll();
+        return hotservice.getAllZones();
     }
 }

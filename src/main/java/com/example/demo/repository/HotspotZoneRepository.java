@@ -1,6 +1,7 @@
-// package com.example.demo.repository;
+package com.example.demo.repository;
 
+public com.example.demo.model.HotspotZone;
 
-// public interface HotspotZoneRepository extends JpaRepository<HotspotZone,Long>{
+public interface HotspotZoneRepository extends JpaRepository<HotspotZone,Long>{
     
-// }
+}
