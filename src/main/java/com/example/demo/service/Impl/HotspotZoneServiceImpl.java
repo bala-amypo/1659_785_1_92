@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.service.HotspotZoneService;
-import com.example.demo.repository.Repository;
-import com.example.demo.model.CrimeReport;
+import com.example.demo.repository.HotspotZoneRepository;
+import com.example.demo.model.HotspotZone;
 
 import java.util.List;
 
