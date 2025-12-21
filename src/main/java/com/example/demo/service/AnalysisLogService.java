@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+public com.example.demo.model.AnalysisLog;
 
 
 public interface AnalysisLogService{
@@ -7,5 +8,5 @@ public interface AnalysisLogService{
 
     AnalysisLog addLog(Long zoneId,String message);
 
-    List<AnalysisLog>getLogsByZone(Long zoneI)
+    List<AnalysisLog>getLogsByZone(Long zoneId);
 }
