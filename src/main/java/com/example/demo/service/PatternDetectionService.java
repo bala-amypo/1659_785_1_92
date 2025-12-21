@@ -1,9 +1,8 @@
 package com.example.demo.service;
 
-import com.example.demo.model.;
+import com.example.demo.model.PatternDetectionResult;
 import java.util.List;
 
-@Service
 public interface PatternDetectionService{
        
        PatternDetectionResult detectPattern(Long zoneId);
