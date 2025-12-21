@@ -1,6 +1,6 @@
-package com.example.demo.repository;
+// package com.example.demo.repository;
 
 
-public interface PatternDetectionResultRepository extends JpaRepository<PatternDetectionResult,Long>{
+// public interface PatternDetectionResultRepository extends JpaRepository<PatternDetectionResult,Long>{
     
-}
+// }

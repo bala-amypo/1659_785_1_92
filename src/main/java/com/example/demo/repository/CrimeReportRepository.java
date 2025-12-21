@@ -1,6 +1,6 @@
-package com.example.demo.repository;
+// package com.example.demo.repository;
 
 
-public interface CrimeReportRepository extends JpaRepository<CrimeReport,Long>{
+// public interface CrimeReportRepository extends JpaRepository<CrimeReport,Long>{
     
-}
+// }
