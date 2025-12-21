@@ -29,8 +29,7 @@ public class HotspotZone {
     private String zoneName;
 
     @NotNull(message = "Center latitude is mandatory")
-    @DecimalMin(value = "-90.0", message = "Latitude must be >= -90")
-    @DecimalMax(value = "90.0", message = "Latitude must be <= 90")
+   
     private Double centerLat;
 
     @NotNull(message = "Center longitude is mandatory")
