@@ -21,8 +21,8 @@ public class HotspotZoneController {
     private HotspotZoneService hotservice;
 
     @PostMapping("/hotpost")
-    public HotspotZone hotReport(@Valid @RequestBody CrimeReport report){
-        return hotservice.addReport(report);
+    public HotspotZone hotReport(@Valid @RequestBody HotspotZone zone ){
+        return hotservice.addReport(zone);
     }
     @GetMapping("/get")
     public List<HotspotZone>gethotval(){
