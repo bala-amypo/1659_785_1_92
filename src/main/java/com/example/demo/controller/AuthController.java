@@ -13,7 +13,7 @@ public class AuthController {
 
     @Autowired
     private UserService userservice;
-
+    
     @PostMapping("/register")
     public User register(@RequestBody User user) {
         return userservice.register(user);
