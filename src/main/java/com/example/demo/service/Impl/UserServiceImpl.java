@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.service.UserService;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.model.User;
+import com.example.demo.exception.ResourceNotFoundException;
 
 
 
@@ -21,7 +22,7 @@ import com.example.demo.model.User;
         }
         @Override
         public User findByEmail(String email){
-            return userrepo.findByEmail(email).orElseThrow(()->new ResourceNotFoundException("Invalid E"+ id));
+            return userrepo.findByEmail(email).orElseThrow(()->new ResourceNotFoundException("Invalid Email"+ email));
         }
         
     
