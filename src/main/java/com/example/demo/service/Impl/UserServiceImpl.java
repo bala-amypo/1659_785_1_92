@@ -12,7 +12,8 @@ import com.example.demo.model.User;
 
 @Service
  public class UserServiceImpl implements UserService{ 
-          @Autowired UserRepository  userrepo;
+          @Autowired 
+          private UserRepository  userrepo;
 
           @Override
         public  User register(User user){
