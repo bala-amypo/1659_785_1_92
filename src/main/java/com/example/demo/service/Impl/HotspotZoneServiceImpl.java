@@ -25,3 +25,4 @@ public class HotspotZoneServiceImpl implements HotspotZoneService{
     public List<HotspotZone>getAllZones(){
         return hotspot.findAll();
     }
+}
