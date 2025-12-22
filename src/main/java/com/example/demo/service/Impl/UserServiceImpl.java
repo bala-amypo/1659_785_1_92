@@ -23,6 +23,15 @@ import com.example.demo.model.User;
         public User findByEmail(String email){
             return userrepo.findByEmail(email);
         }
+        @Override
+public User findByEmail(String email) {
+    User user = userrepo.findByEmail(email);
+    if (user == null) {
+        throw new ResourceNotFoundException("User not found");
+    }
+    return user;
+}
+
     
  }
 
