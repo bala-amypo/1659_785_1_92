@@ -33,7 +33,6 @@ public class HotspotZone {
     private Double centerLat;
 
     @NotNull(message = "Center longitude is mandatory")
-    
     private Double centerLong;
 
     @NotNull(message = "Severity level is mandatory")
