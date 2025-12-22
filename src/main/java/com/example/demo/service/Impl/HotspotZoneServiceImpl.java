@@ -13,10 +13,18 @@ import java.util.List;
 public class HotspotZoneServiceImpl implements HotspotZoneService{
     @Autowired HotspotZoneRepository  hotspot;
 
-    @Override 
-    public HotspotZone addZone(HotspotZone zone){
-        return hotspot.save(zone);
+    // @Override 
+    // public HotspotZone addZone(HotspotZone zone){
+    //     return hotspot.save(zone);
+    // }
+    @Override
+     public HotspotZone addZone(HotspotZone zone) {
+    if (hotspot.findByZoneName(zone.getZoneName()) != null) {
+        throw new ResourceNotFoundException("Zone not found");
     }
+    return hotspot.save(zone);
+}
+
     @Override
     public List<HotspotZone>getAllZones(){
         return hotspot.findAll();

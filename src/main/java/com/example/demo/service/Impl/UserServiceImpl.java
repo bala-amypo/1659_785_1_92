@@ -19,10 +19,10 @@ import com.example.demo.model.User;
         public  User register(User user){
         return userrepo.save(user);
         }
-        @Override
-        public User findByEmail(String email){
-            return userrepo.findByEmail(email);
-        }
+        // @Override
+        // public User findByEmail(String email){
+        //     return userrepo.findByEmail(email);
+        // }
         @Override
 public User findByEmail(String email) {
     User user = userrepo.findByEmail(email);
