@@ -1,12 +1,12 @@
-package com.example.demo.service;
+// package com.example.demo.service;
 
-public com.example.demo.model.AnalysisLog;
-
-
-public interface AnalysisLogService{
+// public com.example.demo.model.AnalysisLog;
 
 
-    AnalysisLog addLog(Long zoneId,String message);
+// public interface AnalysisLogService{
 
-    List<AnalysisLog>getLogsByZone(Long zoneId);
-}
+
+//     AnalysisLog addLog(Long zoneId,String message);
+
+//     List<AnalysisLog>getLogsByZone(Long zoneId);
+// }
