@@ -44,5 +44,8 @@ public class User {
     @PrePersist
     public void setCreatedAt() {
         this.createdAt = LocalDateTime.now();
+        if (this.role == null) {
+            this.role = "ANALYST";
+        }
     }
 }
