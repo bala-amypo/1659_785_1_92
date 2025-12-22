@@ -9,8 +9,8 @@ import org.springframework.http.HttpStatus;
 public class Globalexception{
 
    
-    @ExceptionHandler(Validationexception.class)
-    public ResponseEntity<String> handleValidationexception(Validationexception ex){
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<String> handleResourceNotFoundException(ResourceNotFoundException ex){
     return new ResponseEntity<String>(ex.getMessage(),HttpStatus.BAD_GATEWAY);
 
     }
