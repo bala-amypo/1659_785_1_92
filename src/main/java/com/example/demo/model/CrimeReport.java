@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
-import jakarta.validation.constraints.Size;
+// import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,10 +24,10 @@ public class CrimeReport {
     @NotNull(message = "Description is mandatory")
     private String description;
     @NotNull(message = "Latitude is mandatory")
-    @Size(min=-90,max=90)
+   
     private Double latitude;
     @NotNull(message = "Longitude is mandatory")
-    @Size(min=-180,max=180)
+   
     private Double longitude;
     @NotNull(message = "Occurred time is mandatory")
     @PastOrPresent(message = "Occurred time cannot be in the future")
