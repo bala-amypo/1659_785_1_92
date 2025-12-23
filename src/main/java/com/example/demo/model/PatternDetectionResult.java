@@ -8,7 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Positive;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,7 +30,7 @@ public class PatternDetectionResult {
     @NotNull(message = "Analysis date is mandatory")
     private LocalDate analysisDate;
 
-    @PositiveOrZero(message = "Crime count must be zero or positive")
+    @Positive(message = "Crime count must be zero or positive")
     private Integer crimeCount;
 
     private String detectedPattern;
