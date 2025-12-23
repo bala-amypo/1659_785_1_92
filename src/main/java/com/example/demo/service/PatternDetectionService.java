@@ -1,13 +1,12 @@
-// package com.example.demo.service;
+package com.example.demo.service;
 
-// import com.example.demo.model.PatternDetectionResult;
-// import java.util.List;
+import java.util.List;
 
-// public interface PatternDetectionService{
-       
-//        PatternDetectionResult detectPattern(Long zoneId);
+import com.example.demo.model.PatternDetectionResult;
 
-//        List<PatternDetectionResult>getResultsByZone(Long zoneId);
+public interface PatternDetectionService {
 
+    PatternDetectionResult detectPattern(Long zoneId);
 
-// }
+    List<PatternDetectionResult> getResultsByZone(Long zoneId);
+}
