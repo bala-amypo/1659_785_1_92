@@ -5,10 +5,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
+import jakarta.persistence.PrePersist;
 
 import jakarta.validation.constraints.NotNull;
-
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,13 +28,18 @@ public class HotspotZone {
     private String zoneName;
 
     @NotNull(message = "Center latitude is mandatory")
-   
     private Double centerLat;
 
     @NotNull(message = "Center longitude is mandatory")
     private Double centerLong;
 
-    @NotNull(message = "Severity level is mandatory")
-    
+    @Column(nullable = false)
     private String severityLevel;
+
+    @PrePersist
+    private void setDefaultSeverity() {
+        if (this.severityLevel == null || this.severityLevel.trim().isEmpty()) {
+            this.severityLevel = "LOW";
+        }
+    }
 }
