@@ -48,4 +48,4 @@ public class User {
         this.role = "ANALYST";
     }
     }
-}
+    
