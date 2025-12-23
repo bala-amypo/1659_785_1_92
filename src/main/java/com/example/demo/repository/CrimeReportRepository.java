@@ -7,5 +7,7 @@ import com.example.demo.model.CrimeReport;
 
 @Repository
 public interface CrimeReportRepository extends JpaRepository<CrimeReport,Long>{
-    
+     List<CrimeReport> findByLatLong(
+            double minLat, double maxLat,
+            double minLong, double maxLong);
 }
