@@ -51,7 +51,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Positive;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -69,13 +69,13 @@ public class PatternDetectionResult {
 
    
     @ManyToOne
-    @JoinColumn(name = "zone_id", nullable = false)
+    @JoinColumn(name = "zoneId", nullable = false)
     private HotspotZone zone;
 
     @NotNull(message = "Analysis date is mandatory")
     private LocalDate analysisDate;
 
-    @PositiveOrZero(message = "Crime count must be zero or positive")
+    @Positive(message = "Crime count must be zero or positive")
     private Integer crimeCount;
 
     @NotNull(message = "Detected pattern must be described")
