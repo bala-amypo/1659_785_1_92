@@ -23,7 +23,7 @@ public class PatternDetectionServiceImpl implements PatternDetectionService {
     private final PatternDetectionResultRepository resultRepository;
     private final AnalysisLogRepository logRepository;
 
-    // ✅ Constructor Injection (MANDATORY as per constraint)
+  
     public PatternDetectionServiceImpl(
             HotspotZoneRepository zoneRepository,
             CrimeReportRepository crimeRepository,
@@ -39,17 +39,11 @@ public class PatternDetectionServiceImpl implements PatternDetectionService {
     @Override
     public PatternDetectionResult detectPattern(Long zoneId) {
 
-        // ================================
-        // 1️⃣ FETCH ZONE (NOT FOUND VALIDATION)
-        // ================================
+       
         HotspotZone zone = zoneRepository.findById(zoneId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Zone not found"));
-        // ✔ message contains "zone" and "not"
-
-        // ================================
-        // 2️⃣ FETCH CRIMES NEAR ZONE (+/- 0.1)
-        // ================================
+       
         double minLat = zone.getCenterLat() - 0.1;
         double maxLat = zone.getCenterLat() + 0.1;
         double minLong = zone.getCenterLong() - 0.1;
@@ -59,14 +53,10 @@ public class PatternDetectionServiceImpl implements PatternDetectionService {
                 crimeRepository.findByLatLongRange(
                         minLat, maxLat, minLong, maxLong);
 
-        // ================================
-        // 3️⃣ COUNT CRIMES
-        // ================================
+     
         int crimeCount = crimes.size();
 
-        // ================================
-        // 4️⃣ PATTERN DETECTION LOGIC (EXACT)
-        // ================================
+    
         String detectedPattern;
 
         if (crimeCount > 5) {
@@ -77,9 +67,7 @@ public class PatternDetectionServiceImpl implements PatternDetectionService {
             detectedPattern = "No crime detected";
         }
 
-        // ================================
-        // 5️⃣ SAVE PATTERN DETECTION RESULT
-        // ================================
+        
         PatternDetectionResult result = new PatternDetectionResult();
         result.setZone(zone);
         result.setAnalysisDate(LocalDate.now());
@@ -88,18 +76,13 @@ public class PatternDetectionServiceImpl implements PatternDetectionService {
 
         resultRepository.save(result);
 
-        // ================================
-        // 6️⃣ SAVE ANALYSIS LOG
-        // ================================
+        
         AnalysisLog log = new AnalysisLog();
         log.setZone(zone);
         log.setMessage("Pattern analysis completed for zone");
 
         logRepository.save(log);
 
-        // ================================
-        // 7️⃣ UPDATE ZONE SEVERITY (OPTIONAL)
-        // ================================
         if (crimeCount > 5) {
             zone.setSeverityLevel("HIGH");
         } else if (crimeCount > 0) {
