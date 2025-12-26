@@ -41,57 +41,53 @@ package com.example.demo.controller;
 import com.example.demo.config.JwtUtil;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
+@Tag(name = "Authentication")
 public class AuthController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+    private final JwtUtil jwtUtil;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private JwtUtil jwtUtil;
+    public AuthController(UserService userService, JwtUtil jwtUtil, PasswordEncoder passwordEncoder) {
+        this.userService = userService;
+        this.jwtUtil = jwtUtil;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody User user) {
-        try {
-            User savedUser = userService.register(user);
-            return ResponseEntity.ok(savedUser);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    @Operation(summary = "Register a new User")
+    public User register(@RequestBody User user) {
+        return userService.register(user);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Map<String, String> loginRequest) {
-        try {
-            String email = loginRequest.get("email");
-            String password = loginRequest.get("password");
-            
-            User user = userService.findByEmail(email);
-            
-            // Simple password check (in real app, use BCrypt)
-            if (user.getPassword().equals(password)) {
-                String token = jwtUtil.generateToken(user.getId(), user.getEmail(), user.getRole());
-                
-                Map<String, String> response = new HashMap<>();
-                response.put("token", token);
-                response.put("role", user.getRole());
-                
-                return ResponseEntity.ok(response);
-            } else {
-                return ResponseEntity.badRequest().body("Invalid credentials");
-            }
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+    @Operation(summary = "Login and generate JWT")
+    public Map<String, Object> login(@RequestBody Map<String, String> loginRequest) {
+        User user = userService.findByEmail(loginRequest.get("email"));
+        if (passwordEncoder.matches(loginRequest.get("password"), user.getPassword())) {
+            String token = jwtUtil.generateToken(user.getId(), user.getEmail(), user.getRole());
+            Map<String, Object> response = new HashMap<>();
+            response.put("token", token);
+            response.put("userId", user.getId());
+            response.put("email", user.getEmail());
+            response.put("role", user.getRole());
+            return response;
         }
+        throw new IllegalArgumentException("Invalid credentials");
     }
 }
-
-
