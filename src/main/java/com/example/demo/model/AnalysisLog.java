@@ -6,7 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.validation.constraints.NotNull;
 
@@ -29,11 +30,10 @@ public class AnalysisLog {
 
     private LocalDateTime loggedAt;
 
-    
-    @NotNull
+     @ManyToOne
+    @JoinColumn(name = "zone_id")
     private HotspotZone zone;
 
-   
     @PrePersist
     private void setLoggedAt() {
         this.loggedAt = LocalDateTime.now();
