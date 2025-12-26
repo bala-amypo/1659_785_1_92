@@ -29,26 +29,31 @@ package com.example.demo.service.impl;
 import com.example.demo.model.CrimeReport;
 import com.example.demo.repository.CrimeReportRepository;
 import com.example.demo.service.CrimeReportService;
+import com.example.demo.util.CoordinateValidator;
+import com.example.demo.util.DateValidator;
 import org.springframework.stereotype.Service;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class CrimeReportServiceImpl implements CrimeReportService {
-    private final CrimeReportRepository reportRepository;
 
-    public CrimeReportServiceImpl(CrimeReportRepository reportRepository) {
+    private final CrimeReportRepository reportRepository;
+    private final CoordinateValidator coordinateValidator;
+    private final DateValidator dateValidator;
+
+    public CrimeReportServiceImpl(CrimeReportRepository reportRepository, 
+                                  CoordinateValidator coordinateValidator, 
+                                  DateValidator dateValidator) {
         this.reportRepository = reportRepository;
+        this.coordinateValidator = coordinateValidator;
+        this.dateValidator = dateValidator;
     }
 
     @Override
     public CrimeReport addReport(CrimeReport report) {
-        if (report.getLatitude() < -90 || report.getLatitude() > 90) 
-            throw new IllegalArgumentException("Invalid latitude");
-        if (report.getLongitude() < -180 || report.getLongitude() > 180) 
-            throw new IllegalArgumentException("Invalid longitude");
-        if (report.getOccurredAt() != null && report.getOccurredAt().isAfter(LocalDateTime.now()))
-            throw new IllegalArgumentException("Time cannot be in future");
+        // Use Utils for validation
+        coordinateValidator.validate(report.getLatitude(), report.getLongitude());
+        dateValidator.validateNotFuture(report.getOccurredAt());
         
         return reportRepository.save(report);
     }
