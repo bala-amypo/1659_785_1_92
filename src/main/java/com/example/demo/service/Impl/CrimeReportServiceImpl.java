@@ -54,6 +54,6 @@ public class CrimeReportServiceImpl implements CrimeReportService {
     }
      @Override
     public List<CrimeReport> getAllReports(){
-       return returnRepository.findAll();
+       return reportRepository.findAll();
    }
 }
