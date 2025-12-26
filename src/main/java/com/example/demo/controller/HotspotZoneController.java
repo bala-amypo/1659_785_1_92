@@ -29,30 +29,35 @@ package com.example.demo.controller;
 
 import com.example.demo.model.HotspotZone;
 import com.example.demo.service.HotspotZoneService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/zones")
+@RequestMapping("/zones")
+@Tag(name = "Hotspot Zones")
 public class HotspotZoneController {
-    
-    @Autowired
-    private HotspotZoneService hotspotZoneService;
-    
-    @PostMapping
-    public ResponseEntity<?> addZone(@RequestBody HotspotZone zone) {
-        try {
-            HotspotZone savedZone = hotspotZoneService.addZone(zone);
-            return ResponseEntity.ok(savedZone);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+
+    private final HotspotZoneService zoneService;
+
+    public HotspotZoneController(HotspotZoneService zoneService) {
+        this.zoneService = zoneService;
     }
-    
+
+    @PostMapping
+    @Operation(summary = "Create a hotspot zone")
+    public HotspotZone createZone(@RequestBody HotspotZone zone) {
+        return zoneService.addZone(zone);
+    }
+
     @GetMapping
-    public ResponseEntity<List<HotspotZone>> getAllZones() {
-        return ResponseEntity.ok(hotspotZoneService.getAllZones());
+    @Operation(summary = "List all hotspot zones")
+    public List<HotspotZone> getAllZones() {
+        return zoneService.getAllZones();
     }
 }
