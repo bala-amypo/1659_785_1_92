@@ -35,31 +35,29 @@ package com.example.demo.service.impl;
 import com.example.demo.model.HotspotZone;
 import com.example.demo.repository.HotspotZoneRepository;
 import com.example.demo.service.HotspotZoneService;
-import com.example.demo.util.CoordinateValidator;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
 public class HotspotZoneServiceImpl implements HotspotZoneService {
-
     private final HotspotZoneRepository zoneRepository;
-    private final CoordinateValidator coordinateValidator;
 
-    public HotspotZoneServiceImpl(HotspotZoneRepository zoneRepository, 
-                                  CoordinateValidator coordinateValidator) {
+    // Fixed: Only one argument to match the test suite
+    public HotspotZoneServiceImpl(HotspotZoneRepository zoneRepository) {
         this.zoneRepository = zoneRepository;
-        this.coordinateValidator = coordinateValidator;
     }
 
     @Override
     public HotspotZone addZone(HotspotZone zone) {
         if (zoneRepository.existsByZoneName(zone.getZoneName())) {
-            // Requirement: Message must contain "exists"
-            throw new IllegalArgumentException("Zone name already exists");
+            throw new IllegalArgumentException("Zone name exists");
         }
-        // Use Utils for validation
-        coordinateValidator.validate(zone.getCenterLat(), zone.getCenterLong());
-        
+        if (zone.getCenterLat() == null || zone.getCenterLat() < -90 || zone.getCenterLat() > 90) {
+            throw new IllegalArgumentException("Invalid latitude");
+        }
+        if (zone.getCenterLong() == null || zone.getCenterLong() < -180 || zone.getCenterLong() > 180) {
+            throw new IllegalArgumentException("Invalid longitude");
+        }
         return zoneRepository.save(zone);
     }
 

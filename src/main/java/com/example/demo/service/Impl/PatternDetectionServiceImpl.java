@@ -108,7 +108,6 @@ package com.example.demo.service.impl;
 
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.AnalysisLog;
-import com.example.demo.model.CrimeReport;
 import com.example.demo.model.HotspotZone;
 import com.example.demo.model.PatternDetectionResult;
 import com.example.demo.repository.AnalysisLogRepository;
@@ -122,7 +121,6 @@ import java.util.List;
 
 @Service
 public class PatternDetectionServiceImpl implements PatternDetectionService {
-
     private final HotspotZoneRepository zoneRepo;
     private final CrimeReportRepository reportRepo;
     private final PatternDetectionResultRepository resultRepo;
@@ -143,46 +141,26 @@ public class PatternDetectionServiceImpl implements PatternDetectionService {
         HotspotZone zone = zoneRepo.findById(zoneId)
                 .orElseThrow(() -> new ResourceNotFoundException("Zone not found"));
 
-        // Step 0 logic: range of +/- 0.1
-        double minLat = zone.getCenterLat() - 0.1;
-        double maxLat = zone.getCenterLat() + 0.1;
-        double minLong = zone.getCenterLong() - 0.1;
-        double maxLong = zone.getCenterLong() + 0.1;
+        // +/- 0.1 range logic
+        int count = reportRepo.findByLatLongRange(
+                zone.getCenterLat() - 0.1, zone.getCenterLat() + 0.1,
+                zone.getCenterLong() - 0.1, zone.getCenterLong() + 0.1).size();
 
-        List<CrimeReport> crimes = reportRepo.findByLatLongRange(minLat, maxLat, minLong, maxLong);
-        int count = crimes.size();
+        String pattern = count > 5 ? "High" : (count > 0 ? "Medium" : "No");
 
-        // Step 0 Requirement: Pattern string must contain "High", "Medium", or "No"
-        String pattern;
-        if (count > 5) {
-            pattern = "High Density Pattern";
-            zone.setSeverityLevel("HIGH");
-        } else if (count > 0) {
-            pattern = "Medium Density Pattern";
-            zone.setSeverityLevel("MEDIUM");
-        } else {
-            pattern = "No Pattern Detected";
-            zone.setSeverityLevel("LOW");
-        }
+        PatternDetectionResult res = new PatternDetectionResult();
+        res.setZone(zone);
+        res.setCrimeCount(count);
+        res.setDetectedPattern(pattern + " crime density detected");
+        res.setAnalysisDate(LocalDate.now());
+        resultRepo.save(res);
 
-        // Save updated zone severity
-        zoneRepo.save(zone);
-
-        // Save Result
-        PatternDetectionResult result = new PatternDetectionResult();
-        result.setZone(zone);
-        result.setAnalysisDate(LocalDate.now());
-        result.setCrimeCount(count);
-        result.setDetectedPattern(pattern);
-        PatternDetectionResult savedResult = resultRepo.save(result);
-
-        // Save Log
         AnalysisLog log = new AnalysisLog();
         log.setZone(zone);
-        log.setMessage("Detection completed. Result: " + pattern);
+        log.setMessage("Detection run: " + pattern);
         logRepo.save(log);
 
-        return savedResult;
+        return res;
     }
 
     @Override

@@ -29,32 +29,31 @@ package com.example.demo.service.impl;
 import com.example.demo.model.CrimeReport;
 import com.example.demo.repository.CrimeReportRepository;
 import com.example.demo.service.CrimeReportService;
-import com.example.demo.util.CoordinateValidator;
-import com.example.demo.util.DateValidator;
 import org.springframework.stereotype.Service;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class CrimeReportServiceImpl implements CrimeReportService {
-
     private final CrimeReportRepository reportRepository;
-    private final CoordinateValidator coordinateValidator;
-    private final DateValidator dateValidator;
 
-    public CrimeReportServiceImpl(CrimeReportRepository reportRepository, 
-                                  CoordinateValidator coordinateValidator, 
-                                  DateValidator dateValidator) {
+    // Fixed: Only one argument to match the test suite
+    public CrimeReportServiceImpl(CrimeReportRepository reportRepository) {
         this.reportRepository = reportRepository;
-        this.coordinateValidator = coordinateValidator;
-        this.dateValidator = dateValidator;
     }
 
     @Override
     public CrimeReport addReport(CrimeReport report) {
-        // Use Utils for validation
-        coordinateValidator.validate(report.getLatitude(), report.getLongitude());
-        dateValidator.validateNotFuture(report.getOccurredAt());
-        
+        // Inline validation to ensure specific keywords for tests
+        if (report.getLatitude() == null || report.getLatitude() < -90 || report.getLatitude() > 90) {
+            throw new IllegalArgumentException("Invalid latitude value");
+        }
+        if (report.getLongitude() == null || report.getLongitude() < -180 || report.getLongitude() > 180) {
+            throw new IllegalArgumentException("Invalid longitude value");
+        }
+        if (report.getOccurredAt() != null && report.getOccurredAt().isAfter(LocalDateTime.now())) {
+            throw new IllegalArgumentException("Date cannot be in future");
+        }
         return reportRepository.save(report);
     }
 
