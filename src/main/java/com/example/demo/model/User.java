@@ -1,53 +1,97 @@
-package com.example.demo.model;
-import java.time.LocalDateTime;
+// package com.example.demo.model;
+// import java.time.LocalDateTime;
 
+// import jakarta.persistence.Entity;
+// import jakarta.persistence.GeneratedValue;
+// import jakarta.persistence.GenerationType;
+// import jakarta.persistence.Id;
+// import jakarta.persistence.PrePersist;
+// // import jakarta.validation.constraints.ManyToOne;
+// import jakarta.validation.constraints.Email;
+// import jakarta.validation.constraints.NotNull;
+// import jakarta.validation.constraints.Size;
+
+// import lombok.AllArgsConstructor;
+// import lombok.Data;
+// import lombok.NoArgsConstructor;
+
+// @Entity
+// @Data
+// @AllArgsConstructor
+// @NoArgsConstructor
+// public class User {
+
+//     @Id
+//     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//     private Long id;
+
+//     @NotNull
+//     @Size(min = 2, max = 10, message = "must be 2 to 10 character")
+//     private String name;
+
+//     @Email(message = "Email is not valid")
+//     private String email;
+
+//     @Size(min = 2, max = 10, message = "must be 2 to 10 character")
+//     @NotNull(message = "Password is mandatory")
+//     private String password;
+
+//     private String role;
+     
+   
+//     private LocalDateTime createdAt;
+
+    
+//     @PrePersist
+//     public void setCreatedAt() {
+//         this.createdAt = LocalDateTime.now();
+//         if (this.role == null || this.role.trim().isEmpty()) {
+//         this.role = "ANALYST";
+//     }
+//     }
+//     }
+    
+
+ package com.example.demo.model;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
-// import jakarta.validation.constraints.ManyToOne;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.time.LocalDateTime;
 
-@Entity
 @Data
-@AllArgsConstructor
+@Entity
 @NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "users")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @NotNull
-    @Size(min = 2, max = 10, message = "must be 2 to 10 character")
     private String name;
-
-    @Email(message = "Email is not valid")
+    @Column(unique = true)
     private String email;
-
-    @Size(min = 2, max = 10, message = "must be 2 to 10 character")
-    @NotNull(message = "Password is mandatory")
     private String password;
-
-    private String role;
-     
-   
+    private String role = "ANALYST";
     private LocalDateTime createdAt;
 
-    
+    public User(String name, String email, String password, String role) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.role = (role == null) ? "ANALYST" : role;
+    }
+
     @PrePersist
-    public void setCreatedAt() {
+    protected void onCreate() {
         this.createdAt = LocalDateTime.now();
-        if (this.role == null || this.role.trim().isEmpty()) {
-        this.role = "ANALYST";
+        if (this.role == null) this.role = "ANALYST";
     }
-    }
-    }
-    
+}
