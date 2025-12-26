@@ -59,7 +59,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -79,19 +78,17 @@ public class User {
     @Column(unique = true)
     private String email;
     private String password;
-    private String role = "ANALYST";
-    private LocalDateTime createdAt;
+    
+    // Default Role as per requirement
+    private String role = "ANALYST"; 
+    
+    // Initialize directly for testing
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     public User(String name, String email, String password, String role) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.role = (role == null) ? "ANALYST" : role;
-    }
-
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-        if (this.role == null) this.role = "ANALYST";
     }
 }

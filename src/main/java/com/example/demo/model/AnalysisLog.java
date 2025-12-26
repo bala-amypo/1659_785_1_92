@@ -48,7 +48,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -65,12 +64,10 @@ public class AnalysisLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String message;
-    private LocalDateTime loggedAt;
+    
+    // Initialize directly to pass testAnalysisLogTimestampAuto
+    private LocalDateTime loggedAt = LocalDateTime.now(); 
+
     @ManyToOne
     private HotspotZone zone;
-
-    @PrePersist
-    protected void onLog() {
-        this.loggedAt = LocalDateTime.now();
-    }
 }

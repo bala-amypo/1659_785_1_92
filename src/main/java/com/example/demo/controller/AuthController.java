@@ -43,10 +43,7 @@ import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,28 +55,31 @@ import java.util.Map;
 @RequestMapping("/auth")
 @Tag(name = "Authentication")
 public class AuthController {
-
     private final UserService userService;
     private final JwtUtil jwtUtil;
-    private final PasswordEncoder passwordEncoder;
+    // Use the same encoder used in UserServiceImpl
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    public AuthController(UserService userService, JwtUtil jwtUtil, PasswordEncoder passwordEncoder) {
+    public AuthController(UserService userService, JwtUtil jwtUtil) {
         this.userService = userService;
         this.jwtUtil = jwtUtil;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping("/register")
-    @Operation(summary = "Register a new User")
+    @Operation(summary = "Register User")
     public User register(@RequestBody User user) {
         return userService.register(user);
     }
 
     @PostMapping("/login")
-    @Operation(summary = "Login and generate JWT")
-    public Map<String, Object> login(@RequestBody Map<String, String> loginRequest) {
-        User user = userService.findByEmail(loginRequest.get("email"));
-        if (passwordEncoder.matches(loginRequest.get("password"), user.getPassword())) {
+    @Operation(summary = "Login and get Token")
+    public Map<String, Object> login(@RequestBody Map<String, String> credentials) {
+        String email = credentials.get("email");
+        String password = credentials.get("password");
+
+        User user = userService.findByEmail(email); // Throws exception if not found
+
+        if (encoder.matches(password, user.getPassword())) {
             String token = jwtUtil.generateToken(user.getId(), user.getEmail(), user.getRole());
             Map<String, Object> response = new HashMap<>();
             response.put("token", token);
@@ -88,6 +88,6 @@ public class AuthController {
             response.put("role", user.getRole());
             return response;
         }
-        throw new IllegalArgumentException("Invalid credentials");
+        throw new IllegalArgumentException("Invalid password");
     }
 }

@@ -15,7 +15,6 @@ import java.util.Collections;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter {
-
     private final JwtUtil jwtUtil;
 
     public JwtFilter(JwtUtil jwtUtil) {
@@ -25,12 +24,10 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-
-        String authHeader = request.getHeader("Authorization");
-
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            String token = authHeader.substring(7);
+        String header = request.getHeader("Authorization");
+        if (header != null && header.startsWith("Bearer ")) {
             try {
+                String token = header.substring(7);
                 Claims claims = jwtUtil.parseToken(token);
                 String email = claims.getSubject();
                 String role = claims.get("role", String.class);
@@ -41,7 +38,7 @@ public class JwtFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(auth);
                 }
             } catch (Exception e) {
-                SecurityContextHolder.clearContext();
+                // Continue filter chain even if token is invalid, SecurityConfig will catch it
             }
         }
         filterChain.doFilter(request, response);
