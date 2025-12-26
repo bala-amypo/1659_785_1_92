@@ -1,6 +1,6 @@
 package com.example.demo.service;
 import com.example.demo.model.AnalysisLog;
-import java.util.L
+import java.util.List;
 
 public interface AnalysisLogService{
 
