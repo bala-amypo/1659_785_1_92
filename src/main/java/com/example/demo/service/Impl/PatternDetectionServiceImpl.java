@@ -1,103 +1,103 @@
-package com.example.demo.service;
+// package com.example.demo.service;
 
-import java.time.LocalDate;
-import java.util.List;
+// import java.time.LocalDate;
+// import java.util.List;
 
-import org.springframework.stereotype.Service;
+// import org.springframework.stereotype.Service;
 
-import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.model.AnalysisLog;
-import com.example.demo.model.CrimeReport;
-import com.example.demo.model.HotspotZone;
-import com.example.demo.model.PatternDetectionResult;
-import com.example.demo.repository.AnalysisLogRepository;
-import com.example.demo.repository.CrimeReportRepository;
-import com.example.demo.repository.HotspotZoneRepository;
-import com.example.demo.repository.PatternDetectionResultRepository;
+// import com.example.demo.exception.ResourceNotFoundException;
+// import com.example.demo.model.AnalysisLog;
+// import com.example.demo.model.CrimeReport;
+// import com.example.demo.model.HotspotZone;
+// import com.example.demo.model.PatternDetectionResult;
+// import com.example.demo.repository.AnalysisLogRepository;
+// import com.example.demo.repository.CrimeReportRepository;
+// import com.example.demo.repository.HotspotZoneRepository;
+// import com.example.demo.repository.PatternDetectionResultRepository;
 
-@Service
-public class PatternDetectionServiceImpl implements PatternDetectionService {
+// @Service
+// public class PatternDetectionServiceImpl implements PatternDetectionService {
 
-    private final HotspotZoneRepository zoneRepository;
-    private final CrimeReportRepository crimeRepository;
-    private final PatternDetectionResultRepository resultRepository;
-    private final AnalysisLogRepository logRepository;
+//     private final HotspotZoneRepository zoneRepository;
+//     private final CrimeReportRepository crimeRepository;
+//     private final PatternDetectionResultRepository resultRepository;
+//     private final AnalysisLogRepository logRepository;
 
   
-    public PatternDetectionServiceImpl(
-            HotspotZoneRepository zoneRepository,
-            CrimeReportRepository crimeRepository,
-            PatternDetectionResultRepository resultRepository,
-            AnalysisLogRepository logRepository) {
+//     public PatternDetectionServiceImpl(
+//             HotspotZoneRepository zoneRepository,
+//             CrimeReportRepository crimeRepository,
+//             PatternDetectionResultRepository resultRepository,
+//             AnalysisLogRepository logRepository) {
 
-        this.zoneRepository = zoneRepository;
-        this.crimeRepository = crimeRepository;
-        this.resultRepository = resultRepository;
-        this.logRepository = logRepository;
-    }
+//         this.zoneRepository = zoneRepository;
+//         this.crimeRepository = crimeRepository;
+//         this.resultRepository = resultRepository;
+//         this.logRepository = logRepository;
+//     }
 
-    @Override
-    public PatternDetectionResult detectPattern(Long zoneId) {
+//     @Override
+//     public PatternDetectionResult detectPattern(Long zoneId) {
 
        
-        HotspotZone zone = zoneRepository.findById(zoneId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Zone not found"));
+//         HotspotZone zone = zoneRepository.findById(zoneId)
+//                 .orElseThrow(() ->
+//                         new ResourceNotFoundException("Zone not found"));
        
-        double minLat = zone.getCenterLat() - 0.1;
-        double maxLat = zone.getCenterLat() + 0.1;
-        double minLong = zone.getCenterLong() - 0.1;
-        double maxLong = zone.getCenterLong() + 0.1;
+//         double minLat = zone.getCenterLat() - 0.1;
+//         double maxLat = zone.getCenterLat() + 0.1;
+//         double minLong = zone.getCenterLong() - 0.1;
+//         double maxLong = zone.getCenterLong() + 0.1;
 
-        List<CrimeReport> crimes =
-                crimeRepository.findByLatLongRange(
-                        minLat, maxLat, minLong, maxLong);
+//         List<CrimeReport> crimes =
+//                 crimeRepository.findByLatLongRange(
+//                         minLat, maxLat, minLong, maxLong);
 
      
-        int crimeCount = crimes.size();
+//         int crimeCount = crimes.size();
 
     
-        String detectedPattern;
+//         String detectedPattern;
 
-        if (crimeCount > 5) {
-            detectedPattern = "High crime density detected";
-        } else if (crimeCount > 0) {
-            detectedPattern = "Medium crime density detected";
-        } else {
-            detectedPattern = "No crime detected";
-        }
-
-        
-        PatternDetectionResult result = new PatternDetectionResult();
-        result.setZone(zone);
-        result.setAnalysisDate(LocalDate.now());
-        result.setCrimeCount(crimeCount);
-        result.setDetectedPattern(detectedPattern);
-
-        resultRepository.save(result);
+//         if (crimeCount > 5) {
+//             detectedPattern = "High crime density detected";
+//         } else if (crimeCount > 0) {
+//             detectedPattern = "Medium crime density detected";
+//         } else {
+//             detectedPattern = "No crime detected";
+//         }
 
         
-        AnalysisLog log = new AnalysisLog();
-        log.setZone(zone);
-        log.setMessage("Pattern analysis completed for zone");
+//         PatternDetectionResult result = new PatternDetectionResult();
+//         result.setZone(zone);
+//         result.setAnalysisDate(LocalDate.now());
+//         result.setCrimeCount(crimeCount);
+//         result.setDetectedPattern(detectedPattern);
 
-        logRepository.save(log);
+//         resultRepository.save(result);
 
-        if (crimeCount > 5) {
-            zone.setSeverityLevel("HIGH");
-        } else if (crimeCount > 0) {
-            zone.setSeverityLevel("MEDIUM");
-        } else {
-            zone.setSeverityLevel("LOW");
-        }
+        
+//         AnalysisLog log = new AnalysisLog();
+//         log.setZone(zone);
+//         log.setMessage("Pattern analysis completed for zone");
 
-        zoneRepository.save(zone);
+//         logRepository.save(log);
 
-        return result;
-    }
+//         if (crimeCount > 5) {
+//             zone.setSeverityLevel("HIGH");
+//         } else if (crimeCount > 0) {
+//             zone.setSeverityLevel("MEDIUM");
+//         } else {
+//             zone.setSeverityLevel("LOW");
+//         }
 
-    @Override
-    public List<PatternDetectionResult> getResultsByZone(Long zoneId) {
-        return resultRepository.findByZone_Id(zoneId);
-    }
-}
+//         zoneRepository.save(zone);
+
+//         return result;
+//     }
+
+//     @Override
+//     public List<PatternDetectionResult> getResultsByZone(Long zoneId) {
+//         return resultRepository.findByZone_Id(zoneId);
+//     }
+// }
