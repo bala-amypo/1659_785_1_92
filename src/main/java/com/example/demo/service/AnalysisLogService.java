@@ -1,5 +1,4 @@
 package com.example.demo.service;
-
 public com.example.demo.model.AnalysisLog;
 
 
