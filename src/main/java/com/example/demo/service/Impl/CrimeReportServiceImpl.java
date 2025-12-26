@@ -52,5 +52,8 @@ public class CrimeReportServiceImpl implements CrimeReportService {
             
         return reportRepository.save(report);
     }
-    // ... other methods
+     @Override
+    public List<CrimeReport> getAllReports(){
+       return returnRepository.findAll();
+   }
 }
