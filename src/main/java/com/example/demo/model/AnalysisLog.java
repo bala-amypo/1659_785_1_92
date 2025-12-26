@@ -63,9 +63,10 @@ public class AnalysisLog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
     private String message;
     
-    // Initialize directly to pass testAnalysisLogTimestampAuto
+    // Initialize here so it's never null in the TestNG suite
     private LocalDateTime loggedAt = LocalDateTime.now(); 
 
     @ManyToOne

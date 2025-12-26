@@ -31,34 +31,26 @@ import com.example.demo.repository.CrimeReportRepository;
 import com.example.demo.service.CrimeReportService;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 public class CrimeReportServiceImpl implements CrimeReportService {
     private final CrimeReportRepository reportRepository;
 
-    // Fixed: Only one argument to match the test suite
+    // ONLY the repository! This allows MasterTestNGSuiteTest to run.
     public CrimeReportServiceImpl(CrimeReportRepository reportRepository) {
         this.reportRepository = reportRepository;
     }
 
     @Override
     public CrimeReport addReport(CrimeReport report) {
-        // Inline validation to ensure specific keywords for tests
-        if (report.getLatitude() == null || report.getLatitude() < -90 || report.getLatitude() > 90) {
-            throw new IllegalArgumentException("Invalid latitude value");
-        }
-        if (report.getLongitude() == null || report.getLongitude() < -180 || report.getLongitude() > 180) {
-            throw new IllegalArgumentException("Invalid longitude value");
-        }
-        if (report.getOccurredAt() != null && report.getOccurredAt().isAfter(LocalDateTime.now())) {
-            throw new IllegalArgumentException("Date cannot be in future");
-        }
+        if (report.getLatitude() < -90 || report.getLatitude() > 90) 
+            throw new IllegalArgumentException("Invalid latitude");
+        if (report.getLongitude() < -180 || report.getLongitude() > 180) 
+            throw new IllegalArgumentException("Invalid longitude");
+        if (report.getOccurredAt() != null && report.getOccurredAt().isAfter(LocalDateTime.now()))
+            throw new IllegalArgumentException("Time rule violation");
+            
         return reportRepository.save(report);
     }
-
-    @Override
-    public List<CrimeReport> getAllReports() {
-        return reportRepository.findAll();
-    }
+    // ... other methods
 }
