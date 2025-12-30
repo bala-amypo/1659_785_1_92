@@ -79,10 +79,10 @@ public class User {
     private String email;
     private String password;
     
-    // Default Role as per requirement
+    
     private String role = "ANALYST"; 
     
-    // Initialize directly for testing
+    
     private LocalDateTime createdAt = LocalDateTime.now();
 
     public User(String name, String email, String password, String role) {

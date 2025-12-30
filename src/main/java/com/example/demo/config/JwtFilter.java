@@ -38,7 +38,7 @@ public class JwtFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(auth);
                 }
             } catch (Exception e) {
-                // Continue filter chain even if token is invalid, SecurityConfig will catch it
+                
             }
         }
         filterChain.doFilter(request, response);

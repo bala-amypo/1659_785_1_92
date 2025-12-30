@@ -66,7 +66,7 @@ public class AnalysisLog {
     
     private String message;
     
-    // Initialize here so it's never null in the TestNG suite
+    
     private LocalDateTime loggedAt = LocalDateTime.now(); 
 
     @ManyToOne

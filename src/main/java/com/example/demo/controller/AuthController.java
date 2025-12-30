@@ -65,7 +65,7 @@ public class AuthController {
         this.jwtUtil = jwtUtil;
     }
 
-    // This class solves the "additionalProp" issue in Swagger
+   
     @Data
     public static class LoginRequest {
         private String email;

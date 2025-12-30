@@ -70,5 +70,5 @@ public class HotspotZone {
     private String zoneName;
     private Double centerLat;
     private Double centerLong;
-    private String severityLevel; // LOW, MEDIUM, HIGH
+    private String severityLevel; 
 }
