@@ -36,7 +36,7 @@ import java.util.List;
 public class CrimeReportServiceImpl implements CrimeReportService {
     private final CrimeReportRepository reportRepository;
 
-    // ONLY the repository! This allows MasterTestNGSuiteTest to run.
+    
     public CrimeReportServiceImpl(CrimeReportRepository reportRepository) {
         this.reportRepository = reportRepository;
     }

@@ -42,7 +42,7 @@ import java.util.List;
 public class HotspotZoneServiceImpl implements HotspotZoneService {
     private final HotspotZoneRepository zoneRepository;
 
-    // Fixed: Only one argument to match the test suite
+    
     public HotspotZoneServiceImpl(HotspotZoneRepository zoneRepository) {
         this.zoneRepository = zoneRepository;
     }

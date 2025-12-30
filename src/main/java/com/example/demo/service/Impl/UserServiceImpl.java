@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    // Constructor Injection
+    
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -53,13 +53,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public User register(User user) {
         if (userRepository.existsByEmail(user.getEmail())) {
-            // Requirement: Message must contain "exists"
+            
             throw new IllegalArgumentException("User email already exists");
         }
-        // Requirement: Password must be hashed
+       
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         
-        // Requirement: Default role is ANALYST (handled in Entity or here)
+        
         if (user.getRole() == null || user.getRole().isEmpty()) {
             user.setRole("ANALYST");
         }

@@ -141,7 +141,7 @@ public class PatternDetectionServiceImpl implements PatternDetectionService {
         HotspotZone zone = zoneRepo.findById(zoneId)
                 .orElseThrow(() -> new ResourceNotFoundException("Zone not found"));
 
-        // +/- 0.1 range logic
+       
         int count = reportRepo.findByLatLongRange(
                 zone.getCenterLat() - 0.1, zone.getCenterLat() + 0.1,
                 zone.getCenterLong() - 0.1, zone.getCenterLong() + 0.1).size();
